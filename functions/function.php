@@ -602,6 +602,47 @@ function empty_cart(){
   }
 }
 
+
 ?>
 
 
+<?php
+
+function insert_user(){
+  global $con;
+  $ip=getIPAddress();
+
+  if(isset($_POST['submit'])){
+    $user_name=$_POST['user_name'];
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    $phone=$_POST['phone'];
+    $re_password=$_POST['re_password'];
+    if($password===$re_password){
+    if(!empty($user_name AND $email AND $password AND $phone )){
+   $select_user="SELECT * FROM user WHERE (User_email='$email' OR User_name='$user_name')";
+   $result_user=mysqli_query($con,$select_user);
+   $number_row_user=mysqli_num_rows($result_user);
+   if($number_row_user>0){
+    echo'<script>alert("This user Name is exisit")</script>';
+    echo'<script>window.open("register.php","_SELf")</script>';
+   }else{
+
+    $insert="INSERT INTO user (User_name,User_email,User_password,User_phone,User_ip)
+     VALUES('$user_name','$email','$password','$phone','$ip')";
+    $result_insert=mysqli_query($con,$insert);
+    if($result_insert){
+      echo"<script>alert('Register User Successfuly')</script>";
+    }
+   }
+  }else{
+    echo"<script>alert('Plese Fill Your Information ')</script>";
+  }
+}else{
+  echo"<script>alert('No Match Password ')</script>";
+}
+}
+}
+
+
+?>
