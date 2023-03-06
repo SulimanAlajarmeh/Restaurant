@@ -462,7 +462,7 @@ function details_food(){
         echo "<script>alert('This Food Already Present Into Cart')</script>";
         echo "<script>window.open('cart.php','_self')</script>";
       }else{
-        $insert_food="INSERT INTO cart_details (Food_id,ip_address,quantity) VALUES ($food_id,'$ip',0)";
+        $insert_food="INSERT INTO cart_details (Food_id,ip_address,quantity) VALUES ($food_id,'$ip',1)";
         $result_insert=mysqli_query($con,$insert_food);
         if($result_insert){
           echo "<script>alert('Food Added Into Cart')</script>";
@@ -529,6 +529,44 @@ function total_cart_price(){
 }
 
 ?>
+<!--update_quntity-->
+<?php
+function update_quntity(){
+ global $con;
+ $ip=getIPAddress();
+ $total=0;
+ $ip_select="SELECT * FROM cart_details WHERE ip_address='$ip'";
+ $ip_run=mysqli_query($con,$ip_select);
+ while($ip_row=mysqli_fetch_array($ip_run)){
+  $food_id=$ip_row['Food_id'];
+  $food_select="SELECT * FROM food WHERE Food_id ='$food_id'";
+  $food_run=mysqli_query($con,$food_select);
+  while($food_row=mysqli_fetch_array($food_run)){
+    $food_price=array($food_row['Food_price']);
+    $values=array_sum($food_price);
+    $total+=$values;
+   
+ 
+    if (isset($_POST['update_cart'])){
+      $qty=$_POST['quantity'];
+      $update_qty="UPDATE cart_details SET quantity=$qty";
+      $run_qty=mysqli_query($con,$update_qty);
+      $total=$values*$qty;
+      echo'<script>window.open("cart.php","_self")</script>';
+
+    }
+    
+    
+  }
+}
+
+}
+
+?>
+
+<!--end update_quntity-->
+
+
 <?php
 function remove_cart_item(){
   global $con;
