@@ -101,18 +101,7 @@ include('functions/function.php');
               <label for="quantity">Quantity:</label>
               <input type="number"  min="1"  name="quantity" style="width:90px;" >
               
-          <?php
-            if(isset($_POST['update_cart'])){
-              if(!empty($_POST['quantity'])){
-                $quntatity=$_POST['quantity'];
-                $ip=getIPAddress();
-                $update="UPDATE cart_details SET quantity=$quntatity WHERE (ip_address='$ip') ";
-                  $result_update=mysqli_query($con,$update);
-        echo'<script>window.open("cart.php","_self")</script>';
- 
- }
-}
-?>
+    
               </p>
               <p>
               <label >Remove:</label>
@@ -143,13 +132,13 @@ include('functions/function.php');
       
         ?>
          <div class=" container mt-3 d-flex justify-content-center">
-        <a class="w-100 btn " href="check_payment.php"><button type="button" class= "w-100 btn btn-success text-white">Payment</button></a>
+        <a class="w-50 btn " href="check_payment.php"><button type="button" class= "w-100 btn btn-success text-white">Payment</button></a>
         </div>
        
         
         
         <div class=" container mt-3 d-flex justify-content-center">
-        <a class="w-100 btn " href="cart.php?empty_cart"><button type="button" class= "w-100 btn btn-danger">Empty Cart</button></a>
+        <a class="w-50 btn " href="cart.php?empty_cart"><button type="button" class= "w-100 btn btn-danger">Empty Cart</button></a>
         </div>
         
         <?php
@@ -162,7 +151,8 @@ include('functions/function.php');
 <?php
 
 remove_cart_item();
-empty_cart()
+empty_cart();
+update_quntity();
 ?>
 
 
