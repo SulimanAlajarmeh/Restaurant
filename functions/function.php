@@ -448,31 +448,48 @@ function details_food(){
 ?>
 
 <!--add cart  function--> 
+
 <?php
-  function add_cart(){
-    global $con;
-     $ip= getIPAddress();   
-    if(isset($_GET['add_to_cart'])){
-      $food_id=$_GET['add_to_cart'];
-      $select_food="SELECT * FROM cart_details WHERE(Food_id=$food_id AND ip_address='$ip')";
-      $result_food=mysqli_query($con,$select_food);
-      $num_food=mysqli_num_rows($result_food);
-
-      if($num_food>0){
-        echo "<script>alert('This Food Already Present Into Cart')</script>";
-        echo "<script>window.open('cart.php','_self')</script>";
-      }else{
-        $insert_food="INSERT INTO cart_details (Food_id,ip_address,quantity) VALUES ($food_id,'$ip',1)";
-        $result_insert=mysqli_query($con,$insert_food);
-        if($result_insert){
-          echo "<script>alert('Food Added Into Cart')</script>";
-          echo "<script>window.open('cart.php','_self')</script>";
-        }
-      }
-
+function add_cart(){
+  global $con;
+   $ip= getIPAddress(); 
+     
+  if(isset($_GET['add_to_cart'])){
+    $food_id=$_GET['add_to_cart'];
+    $user_id=$_SESSION['id'];  
+    
+    $select_food="SELECT * FROM cart_details WHERE (Food_id=$food_id AND User_id=$user_id) ";
+    $result_select=mysqli_query($con,$select_food);
+    $num_food=mysqli_num_rows($result_select);
+    if($num_food>0){
+      echo'<script>alert("Food Already Exist in Cart")</script>';
+        echo '<script>window.open("cart.php","_self")</script>';
+        
+       
+        
+      
+    }else{ $insert_food="INSERT INTO cart_details (Food_id,User_id,ip_address,quantity) VALUES ($food_id,$user_id,'$ip',1)";
+    $result_insert=mysqli_query($con,$insert_food);
+    if($result_insert){
+      echo'<script>alert("Insert Food Successfuly in Cart")</script>';
+      echo '<script>window.open("cart.php","_self")</script>';
+      
     }
+    }
+     
+    }
+    
   }
-  ?>
+
+  
+
+?>
+    
+  
+    
+    
+  
+ 
 
 
 <!-- number food in cart-->
@@ -480,8 +497,9 @@ function details_food(){
     
     function number_cart_food(){
       global $con;
-      $ip=getIPAddress();
-      $select_food="SELECT * FROM cart_details WHERE (ip_address='$ip')";
+      $ip= getIPAddress(); 
+      $user_id=$_SESSION['id'];
+      $select_food="SELECT * FROM cart_details WHERE (ip_address='$ip'AND User_id=$user_id )";
        $result_food=mysqli_query($con,$select_food);
        $num_food=mysqli_num_rows($result_food);
        return $num_food;
@@ -495,9 +513,10 @@ function details_food(){
 
 function total_cart_price(){
   global $con;
-  $ip=getIPAddress();
+  $ip= getIPAddress(); 
   $total_price=0;
-  $select_user="SELECT * FROM cart_details WHERE (ip_address='$ip')";
+  $user_id=$_SESSION['id'];
+  $select_user="SELECT * FROM cart_details WHERE (ip_address='$ip' AND User_id=$user_id )";
   $result_user=mysqli_query($con,$select_user);
   while($row_user=mysqli_fetch_array($result_user)){
     $food_id=$row_user['Food_id'];
@@ -531,36 +550,30 @@ function total_cart_price(){
 ?>
 <!--update_quntity-->
 <?php
-function update_quntity(){
- global $con;
- $ip=getIPAddress();
- $total=0;
- $ip_select="SELECT * FROM cart_details WHERE ip_address='$ip'";
- $ip_run=mysqli_query($con,$ip_select);
- while($ip_row=mysqli_fetch_array($ip_run)){
-  $food_id=$ip_row['Food_id'];
-  $food_select="SELECT * FROM food WHERE Food_id ='$food_id'";
-  $food_run=mysqli_query($con,$food_select);
-  while($food_row=mysqli_fetch_array($food_run)){
-    $food_price=array($food_row['Food_price']);
-    $values=array_sum($food_price);
-    $total+=$values;
-   
- 
-    if (isset($_POST['update_cart'])){
-      $qty=$_POST['quantity'];
-      $update_qty="UPDATE cart_details SET quantity=$qty";
-      $run_qty=mysqli_query($con,$update_qty);
-      $total=$values*$qty;
-      echo'<script>window.open("cart.php","_self")</script>';
-
+function update_cart(){
+  global $con;
+  $ip=getIPAddress();
+  $user_id=$_SESSION['id'];
+  if(isset($_GET['qty'])){
+    if(isset($_GET['id'])){
+      $qty=$_GET['qty'];
+      $cart_id=$_GET['id'];
+      $select_user="SELECT * FROM cart_details WHERE(User_id=$user_id AND ip_address='$ip')";
+      $result_user=mysqli_query($con,$select_user);
+      $num_user=mysqli_num_rows($result_user);
+      if($num_user>0){
+        $update="UPDATE cart_details SET quantity=$qty WHERE(Cart_id=$cart_id)";
+        $result_update=mysqli_query($con,$update);
+        if($result_update){
+          echo '<script>window.open("cart.php","_self")</script>';
+        }
+      }
     }
-    
-    
   }
 }
+        
+        
 
-}
 
 ?>
 
@@ -570,11 +583,10 @@ function update_quntity(){
 <?php
 function remove_cart_item(){
   global $con;
-  if(isset($_POST['remove'])){
-    if(isset($_POST['removeitem'])){
-    foreach($_POST['removeitem'] as $remove_id){
-      
-      $delete="DELETE FROM cart_details WHERE (Food_id=$remove_id)";
+  $user_id=$_SESSION['id'];
+  if(isset($_GET['remove'])){
+    $Cart_id=$_GET['remove'];
+      $delete="DELETE FROM cart_details WHERE (Cart_id=$Cart_id AND User_id=$user_id)";
       $result_delete=mysqli_query($con,$delete);
       if($result_delete){
         echo'<script>alert("Food Delete From Cart")</script>';
@@ -583,16 +595,17 @@ function remove_cart_item(){
       }
     }
   }
-}
-}
+
 
 ?>
+
+
 <?php
 function empty_cart(){
   global $con;
-  $ip= getIPAddress(); 
+  $user_id=$_SESSION['id'];
   if(isset($_GET['empty_cart'])){
-    $delete_all="DELETE FROM cart_details WHERE (ip_address='$ip')";
+    $delete_all="DELETE FROM cart_details WHERE (User_id=$user_id)";
     $result_delete=mysqli_query($con,$delete_all);
     if($result_delete){
       echo'<script>alert("All Food Delete From Cart")</script>';
@@ -606,34 +619,39 @@ function empty_cart(){
 ?>
 
 
+
 <?php
 
 function insert_user(){
   global $con;
   $ip=getIPAddress();
-
   if(isset($_POST['submit'])){
     $user_name=$_POST['user_name'];
     $email=$_POST['email'];
     $password=$_POST['password'];
+    $hash_password=password_hash($password,PASSWORD_DEFAULT);
     $phone=$_POST['phone'];
     $re_password=$_POST['re_password'];
     if($password===$re_password){
-    if(!empty($user_name AND $email AND $password AND $phone )){
-   $select_user="SELECT * FROM user WHERE (User_email='$email' OR User_name='$user_name')";
+    if(!empty($user_name) AND !empty($email) AND !empty($password) AND !empty($phone) ){
+   $select_user="SELECT * FROM user WHERE (User_email='$email')";
    $result_user=mysqli_query($con,$select_user);
    $number_row_user=mysqli_num_rows($result_user);
    if($number_row_user>0){
-    echo'<script>alert("This user Name is exisit")</script>';
+    echo'<script>alert("This User Name is exisit")</script>';
     echo'<script>window.open("register.php","_SELf")</script>';
    }else{
 
     $insert="INSERT INTO user (User_name,User_email,User_password,User_phone,User_ip)
-     VALUES('$user_name','$email','$password','$phone','$ip')";
+     VALUES('$user_name','$email','$hash_password','$phone','$ip')";
     $result_insert=mysqli_query($con,$insert);
     if($result_insert){
       echo"<script>alert('Register User Successfuly')</script>";
     }
+   else{
+      echo'<script>window.open("login.php","_SELF")</script>';
+    }
+
    }
   }else{
     echo"<script>alert('Plese Fill Your Information ')</script>";
@@ -646,3 +664,62 @@ function insert_user(){
 
 
 ?>
+
+<?php
+
+function login(){
+  global $con;
+ $ip=getIPAddress();
+  if(isset($_POST['login'])){
+    
+    $user_name=$_POST['user_name'];
+    $user_email=$_POST['user_email'];
+    $user_password=$_POST['user_password'];
+    if(!empty($user_name) AND !empty($user_email) AND !empty($user_password)){
+    $select_user="SELECT * FROM user WHERE(User_email='$user_email' AND User_name='$user_name')";
+    $result=mysqli_query($con,$select_user);
+    $num_row_user=mysqli_num_rows($result);
+    $row=mysqli_fetch_assoc($result);
+    
+    if($num_row_user>0){
+      $_SESSION['username']=$row['User_name'];
+        $_SESSION['id']=$row['User_id'];
+      if(password_verify($user_password,$row['User_password'])){
+        $_SESSION['username']=$row['User_name'];
+        $_SESSION['id']=$row['User_id'];
+        $id=$_SESSION['id'];
+        $select_cart="SELECT * FROM cart_details WHERE (User_id=$id ) ";
+        $result_cart=mysqli_query($con,$select_cart);
+        $num_cart_item=mysqli_num_rows($result_cart);
+        if($num_row_user==1 AND $num_cart_item==0){
+          $_SESSION['username']=$row['User_name'];
+        $_SESSION['id']=$row['User_id'];
+          echo'<script>alert("Login Successfuly")</script>';
+          echo'<script>window.open("../home.php","_SELF")</script>';
+
+        }else{
+          $_SESSION['username']=$row['User_name'];
+        $_SESSION['id']=$row['User_id'];
+          echo'<script>alert("Login Successfuly")</script>';
+          echo'<script>window.open("payment.php","_SELF")</script>';
+        }
+      }else{
+        echo'<script>alert("Invalid Information")</script>';
+      }
+    }else{
+      echo'<script>alert("Invalid Information")</script>';
+    }
+  }else{
+    echo'<script>alert("Plese Fill Your Information")</script>';
+  }
+  
+}
+}
+
+
+
+
+?>
+
+
+
