@@ -2,6 +2,8 @@
 
 include('Connect Database/connect.php');
 include('functions/function.php');
+session_start();
+echo$_SESSION['id'];
 
 ?>
 
@@ -39,7 +41,7 @@ include('functions/function.php');
               </li>
               
               <li >
-                <i class="cart fa-solid fa-cart-arrow-down"><sup  class=" m-1 text-black fs-6"><?php  echo number_cart_food(); ?></sup> : <span class="text-black">$ <?php total_cart_price();?></span></i>
+                <i class="cart fa-solid fa-cart-arrow-down"><sup  class=" m-1 text-black fs-6"><?php if(isset($_SESSION['id'])) {echo number_cart_food();} ?></sup> : <span class="text-black">$ <?php if(isset($_SESSION['id'])){ total_cart_price();}?></span></i>
               </li>
                              
             </ul>
@@ -51,27 +53,36 @@ include('functions/function.php');
       </nav>
     
     <?php
-   
-         if(isset($_GET['add_to_cart'])){
-           add_cart();
+ 
+          if(!isset($_SESSION['id'])){
+         if(!isset($_GET['add_to_cart'])){
+          echo'<script>window.open("UserArea/login.php","_SELF")</script>';
           }
-
+        }else{
+          echo$_SESSION['id'];
+          add_cart();
+          
+        }
+        
          
+        
           
 
 ?>
 <div class="row mt-5">
  <h2 class="text-center ">Food In Cart</h2>
   <?php
- $ip=getIPAddress();
-  
-      $select_user="SELECT * FROM cart_details WHERE (ip_address='$ip')";
+  if(isset($_SESSION['id'])){
+    $ip=getIPAddress();
+  $id=$_SESSION['id'];
+      $select_user="SELECT * FROM cart_details WHERE (ip_address='$ip' AND User_id=$id)";
       $result_user=mysqli_query($con,$select_user);
       $num_ip_user=mysqli_num_rows($result_user);
       if($num_ip_user>0){
-      while($row_user=mysqli_fetch_array($result_user)){
+      while($row_user=mysqli_fetch_assoc($result_user)){
+        $Cart_id=$row_user['Cart_id'];
         $food_id=$row_user['Food_id'];
-        $select_food="SELECT * FROM food WHERE (Food_id=$food_id)";
+        $select_food="SELECT * FROM food WHERE (Food_id=$food_id )";
         $result_food=mysqli_query($con,$select_food);
         $num_food=mysqli_num_rows($result_food);
         if($num_food>0){
@@ -85,8 +96,11 @@ include('functions/function.php');
 
          
             ?>
-            <div class="col-sm-3 mt-3">
-            <form method="post">
+                    <div class="col-sm-3 mt-3">
+            <form method="post" action="cart.php?qty=<?php if(isset($_POST['quantity'])){
+              echo $_POST['quantity']; 
+            }?>&id=<?php echo $Cart_id; ?>" >
+            
            
             <div class="card m-3" style="width: 20rem; height:100vh;">
            
@@ -99,26 +113,41 @@ include('functions/function.php');
               <p class="mt-2 card-text">
               
               <label for="quantity">Quantity:</label>
-              <input type="number"  min="1"  name="quantity" style="width:90px;" >
-              
+              <input type="number"  min="1"  name="quantity" style="width:150px;" >
+              <input style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .90rem; margin-bottom:5px;" class="  btn btn-dark text-white" type="submit" name="add" value="add">
     
               </p>
-              <p>
-              <label >Remove:</label>
-              <input type="checkbox"  name="removeitem[]" value="<?php echo $food_id?>">
-              </p>
+              
                           
-              <input class="mt-4 m-2 btn btn-warning text-white" type="submit" name="update_cart" value="Update Food">
-              <input class="mt-4 m-2 btn btn-danger text-white" type="submit" name="remove" value="Remove Food">
+              <input class="w-100 mt-4 btn btn-warning text-white" type="submit" name="update_cart" value="Update Food">
+              <?php
+        
+        echo'<form>
+        <a class="text-white" href="cart.php?remove='.$Cart_id.'"><input class=" w-100 mt-4  btn btn-danger text-white" type="button" name="remove" value="Remove Food" ></a>
+        </form>';
+        ?>
             
             </div>
           </div>
+          
           </form>
         
-
+         
 
 
             </div>
+             
+             
+              
+              
+       
+          
+
+         
+          
+     
+
+           
             
 
          
@@ -126,18 +155,18 @@ include('functions/function.php');
           }
           }
 
-          
+        
 
         }
       
         ?>
-         <div class=" container mt-3 d-flex justify-content-center">
-        <a class="w-50 btn " href="check_payment.php"><button type="button" class= "w-100 btn btn-success text-white">Payment</button></a>
+         <div class=" container mt-3 d-flex justify-content-center m-2">
+        <a class="w-50 btn " href="UserArea/check_payment.php"><button type="button" class= "w-100 btn btn-success text-white">Payment</button></a>
         </div>
        
         
         
-        <div class=" container mt-3 d-flex justify-content-center">
+        <div class=" container mt-1 d-flex justify-content-center m-2">
         <a class="w-50 btn " href="cart.php?empty_cart"><button type="button" class= "w-100 btn btn-danger">Empty Cart</button></a>
         </div>
         
@@ -145,20 +174,30 @@ include('functions/function.php');
       }else{
         echo'<h2 class="mt-5 text-center text-danger"> No Food Added To Cart</h2>';
       }
-   
-    
+    }else{
+      echo'<script>window.open("UserArea/login.php","_SELF")</script>';
+    }
+  
+  
   ?>
 <?php
-
+ if(isset($_SESSION['id'])){
 remove_cart_item();
 empty_cart();
-update_quntity();
+update_cart();
+ 
+ }
 ?>
 
 
     
 </div>
 
+<div class="container-faluid " >
+<div class=" w-100 "  style="background-color:black; height:60px;">
+  <p class="pt-3 text-center text-warning fs-3">Suliman Alajarmeh <span>&copy;</span> 2023 </p>
+</div>
+</div>
 
 
 </body>

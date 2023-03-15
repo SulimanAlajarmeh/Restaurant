@@ -70,9 +70,24 @@ button a{
     text-decoration: none;
 }
 
-@media (max-width:1200px) {
-    body{
-        height: 50vh;
+
+
+@media (max-width:768px) {
+    form{
+
+        margin-top: 180px;
+        
+    }
+    
+}
+
+
+@media (min-width:1000px) {
+    form{
+
+
+        margin-top: 182px;
+        
     }
     
 }

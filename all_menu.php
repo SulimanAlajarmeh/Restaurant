@@ -2,7 +2,7 @@
 
 include('Connect Database/connect.php');
 include('functions/function.php');
-
+session_start();
 ?>
 
 
@@ -32,19 +32,20 @@ include('functions/function.php');
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul id="item" class="navbar-nav me-auto mb-2 mb-lg-0">
               <li  class="items nav-item">
+              <li  class="items nav-item">
+                
+                <a class="nav-link " aria-current="page" href="UserArea/profile.php">My Profile</a>
+              </li>
+              <li class="items nav-item">
                 <a class="nav-link " aria-current="page" href="home.php">Home</a>
               </li>
               <li  class="items nav-item">
                 <a class="nav-link " aria-current="page" href="#menu">Menu</a>
               </li>
-              <li  class="items nav-item">
-                
-                <a class="nav-link " aria-current="page" href="#">Home</a>
-              </li>
+              
 
-              <li class="items nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
+              
+                
               <li class="items nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Type of Food
@@ -93,7 +94,10 @@ include('functions/function.php');
               
             </ul>
             
-            <a href="cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup  class="  m-1  text-black fs-6"><?php  echo number_cart_food(); ?></sup></i></a>
+            <a href="cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup  class="  m-1  text-black fs-6"><?php
+            if(isset($_SESSION['id'])){
+              echo number_cart_food();} ?>
+              </sup></i></a>
        
             <a href="UserArea/login.php"><button class="login-button btn" type="submit">Logout</button></a>
           </div>
@@ -190,6 +194,12 @@ include('functions/function.php');
 
 </div>
 
+</div>
+
+<div class="container-faluid " >
+<div class=" w-100 "  style="background-color:#dad7d7; height:60px;">
+  <p class="pt-3 text-center text-warning fs-3">Suliman Alajarmeh <span>&copy;</span> 2023 </p>
+</div>
 </div>
 
 <!--end Menu-->

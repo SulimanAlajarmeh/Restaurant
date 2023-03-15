@@ -1,7 +1,7 @@
 <?php
  include('../Connect Database/connect.php');
  include('../functions/function.php');
-
+ session_start();
 ?>
 
 
@@ -43,7 +43,7 @@
         <label for="phone_user">Phone:</label>
         <input id="phone_user" type="text" name="phone" placeholder="Enter Your Phone" required="required" autocomplete="off">
 
-
+        
 
         <button type="submit" name="submit" value="submit">Submit</button>
 
@@ -64,6 +64,7 @@ if(isset($_POST['submit'])){
  insert_user();
 }
 ?>
+
 
     
 </body>

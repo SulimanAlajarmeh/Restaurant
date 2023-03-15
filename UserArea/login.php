@@ -1,6 +1,9 @@
 <?php
    include('../Connect Database/connect.php');
    include('../functions/function.php');
+   session_start();
+
+   
 ?>
 
 <!DOCTYPE html>
@@ -17,24 +20,36 @@
 </head>
 <body>
 
+
+<?php
+if(isset($_POST['login'])){
+login();
+}
+?>
+
     
 
 
-    <form  method="post">
+    <form  method="post" style="margin-top:90px;">
         <h1>Molto delizioso </h1>
         <h2>Login</h2>
        
         <label>UserName:</label><br>
-        <input type="text" name="name" placeholder="Enter Your Name">
+        <input type="text" name="user_name" placeholder="Enter Your Name" autocomplete="off" required="required">
+
+        <label>Email:</label>
+       
+        <input type="email" name="user_email" placeholder="Enter Your Email" autocomplete="off" required="required"> 
+
         <label>Password:</label>
        
-        <input type="password" name="password" placeholder="Enter Your Password">
-        <button  class="bg-success text-white"type="submit">Submit</button>
+        <input type="password" name="user_password" placeholder="Enter Your Password" autocomplete="off" required="required">
+        <button  class="bg-success text-white"type="submit" name="login">Submit</button>
         <button type="submit"><a href="register.php">Register</a></button>
 
        
      
     </form>
-    
+  
 </body>
 </html>

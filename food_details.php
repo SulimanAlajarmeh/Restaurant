@@ -2,7 +2,7 @@
 
 include('Connect Database/connect.php');
 include('functions/function.php');
-
+session_start();
 ?>
 
 
@@ -163,6 +163,13 @@ include('functions/function.php');
 </div>
 
 </div>
+
+<div class="container-faluid " >
+<div class=" w-100 "  style="background-color:#dad7d7; height:60px;">
+  <p class="pt-3 text-center text-warning fs-3">Suliman Alajarmeh <span>&copy;</span> 2023 </p>
+</div>
+</div>
+
 
 <!--end Menu-->
 

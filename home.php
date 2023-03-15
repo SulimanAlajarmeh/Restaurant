@@ -2,7 +2,8 @@
 
 include('Connect Database/connect.php');
 include('functions/function.php');
-
+session_start();
+echo$_SESSION['id'];
 ?>
 
 
@@ -31,6 +32,12 @@ include('functions/function.php');
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul id="item" class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <li  class="items nav-item">
+                
+                <a class="nav-link " aria-current="page" href="check_profile.php">My Profile</a>
+              </li>
+
               <li  class="items nav-item">
                 <a class="nav-link " aria-current="page" href="home.php">Home</a>
               </li>
@@ -47,10 +54,7 @@ include('functions/function.php');
                 <a class="nav-link " aria-current="page" href="#about">About Us</a>
               </li>
 
-              <li  class="items nav-item">
-                
-                <a class="nav-link " aria-current="page" href="#view resturant">View The Restaurant</a>
-              </li>
+             
 
               <li class="items nav-item">
                 <a class="nav-link" href="#Contact">Contact US</a>
@@ -103,13 +107,20 @@ include('functions/function.php');
               </li>
               
             </ul>
-            <a href="cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup class=" m-1  text-black fs-6"><?php  echo number_cart_food(); ?></sup></i></a>
-       
-            <a href="UserArea/login.php"><button class="login-button btn" type="submit">Logout</button></a>
+            <a href="cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup class=" m-1  text-black fs-6"><?php if(isset($_SESSION['id'])){echo number_cart_food();}   ?></sup></i></a>
+            <?php
+            if(!isset($_SESSION['id'])){
+            echo'<a href="UserArea/login.php"><button class="login-button btn" type="submit">Login</button></a>';
+            }else{
+              echo'<a href="logout.php"><button class="login-button btn" type="submit">Logout</button></a>';
+            }
+            ?>
           </div>
         </div>
       </nav>
     <!--end nav-->
+
+  
     <!--start landding-->
     <div class="ladding">
 
@@ -545,5 +556,11 @@ include('functions/function.php');
   </div>
 </div>
 <!--end contact-->
+<div class="container-faluid " >
+<div class=" w-100 "  style="background-color:black; height:60px;">
+  <p class="pt-3 text-center text-warning fs-5"><span>&copy;</span> 2023 All Rights Reserved By Suliman Bassam Alajarmeh 2023 </p>
+</div>
+</div>
+
 </body>
 </html>
