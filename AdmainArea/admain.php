@@ -22,20 +22,20 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav-mange navbar-nav me-auto mb-2 mb-lg-0">
 
-                <a class="link" href="admain.php?insert_food"><button class="login-button btn" type="submit">Insert Food</button></a>
-                <a class="link" href=""><button class="login-button btn" type="submit">View Food</button></a>
+                <a class="link" href="admain.php?insert_food"><button class="btn-warning btn " type="submit">Insert Food</button></a>
+                <a class="link" href=""><button class="btn-warning btn " type="submit">View Food</button></a>
 
-                <a class="link" href="admain.php?insert_type_food"><button class="login-button btn" type="submit">Insert Type Food</button></a>
-                <a class="link" href="admain.php?view_type_food"><button class="login-button btn" type="submit">View Type Food</button></a>
+                <a class="link" href="admain.php?insert_type_food"><button class="btn-warning btn " type="submit">Insert Type Food</button></a>
+                <a class="link" href="admain.php?view_type_food"><button class="btn-warning btn " type="submit">View Type Food</button></a>
 
-                <a class="link" href="admain.php?insert_food_country"><button class="login-button btn" type="submit">Insert Food Country</button></a>
-                <a class="link" href="admain.php?view_food_country"><button class="login-button btn" type="submit">View Food Country</button></a>
+                <a class="link" href="admain.php?insert_food_country"><button class=" btn-warning btn " type="submit">Insert Food Country</button></a>
+                <a class="link" href="admain.php?view_food_country"><button class="btn-warning btn " type="submit">View Food Country</button></a>
 
 
 
-                <a class="link" href=""><button class="login-button btn" type="submit">All Order</button></a>
-                <a class="link" href=""><button class="login-button btn" type="submit">All Payments</button></a>
-                <a class="link" href=""><button class="login-button btn" type="submit">List User</button></a>
+                <a class="link" href=""><button class="btn-warning btn " type="submit">All Order</button></a>
+                <a class="link" href=""><button class="btn-warning btn " type="submit">All Payments</button></a>
+                <a class="link" href=""><button class="btn-warning btn " type="submit">List User</button></a>
             
             </ul>
             

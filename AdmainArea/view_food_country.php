@@ -34,7 +34,7 @@ if($numrow>0){
             <tr>
               <td>'.$id.'</td>
               <td>'.$country_name.'</td>
-              <td><a href="delete.php?country_id='.$id.'"><button name="delete"  type="submit" class="btn btn-danger">Delete</button><a></td>
+              <td><a href="delete.php?country_id='.$id.'"><i class="fa-solid fa-trash text-danger"></i><a></td>
             </tr>
            
          ';

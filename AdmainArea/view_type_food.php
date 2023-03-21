@@ -35,7 +35,7 @@ echo'
         <tr>
         <td>'.$id.'</td>
         <td>'.$type_name.'</td>
-        <td><a href="delete.php?type_id='.$id.'"><button  type="button" class="btn btn-danger">Delete</button><a></td>
+        <td><a href="delete.php?type_id='.$id.'"><i class="fa-solid fa-trash text-danger"></i></td>
         </tr>
 
         ';
