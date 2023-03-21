@@ -1,3 +1,10 @@
+<?php
+include('../Connect Database/connect.php');
+include('../functions/function.php');
+session_start();
+echo $_SESSION['id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +17,9 @@
     <link rel="stylesheet" href="css/profile.css">
     <title>Document</title>
 </head>
+<style>
+ 
+</style>
 <body>
     <nav  class="nw navbar navbar-expand-lg bg-secondry ">
         <div  class="container-fluid">
@@ -28,7 +38,11 @@
               </li>
               
               <li >
-                <i class="cart fa-solid fa-cart-arrow-down"><sup  class=" m-1 text-black fs-6"><?php  echo number_cart_food(); ?></sup> : <span class="text-black">$ <?php total_cart_price();?></span></i>
+              <a href="../cart.php">
+                <i class="cart fa-solid fa-cart-arrow-down"><sup  class=" m-1 text-black fs-6"><?php 
+                if(isset($_SESSION['id'])){ echo number_cart_food();} ?></sup> : <span class="text-black">$ 
+                  <?php  if(isset($_SESSION['id'])){total_cart_price();}?></span></i>
+              </a>
               </li>
                              
             </ul>
@@ -37,7 +51,7 @@
             </ul>
          
        
-            <a href="./logout.php"><button class="login-button btn" type="submit">Logout</button></a>
+            <a href="../logout.php"><button class="login-button btn" type="submit">Logout</button></a>
           </div>
         </div>
       </nav>
@@ -47,21 +61,21 @@
       <!--start profile-->
 
    <!--start profile header-->
+
+
    
       <h2 class="text-center mt-3 fw-bold">Your Profile:</h2>
 
-      <div class="user">
-        <div class="user-info">
-        <div class="imge-profile">
-            <img class="rounded-circle" src="../img/suliman.jpeg">
 
-        </div>
-        <div class="text-profile">
-            <p class="fs-4">Your Name</p>
-            <p>Phone</p>
-            <p>Emial</p>
-          
-        </div>
+      <div class="user">
+      <div class="user-info">
+        <?php
+        profile_img();
+        ?>
+       
+        <?php
+       profile_info();
+        ?>
     </div>
     <div class="user-num-order">
         <div class="content">
@@ -93,108 +107,43 @@
 
        <div class="profile-body">
         <div class="profile-body-edit">
-            <h3 class="text-center mt-3 fw-bold" ">Edit Profile</h3>
-         <P class="m-4 fs-4">Edit profile</P>
-         <form class="m-4 " enctype="multipart/form-data">
-            <label class="fs-4 m-1"> Add Image Profile: </label>
-            <input type="file">
-            <button type="button" class=" mt-3 text-white btn btn-warning">submit</button>
-         </form>
-         <P class="m-4 fs-4">Edit profile</P>
+            <h3 class="text-center mt-3 fw-bold" ">Setting Profile</h3>
+         <P class="m-4 fs-4  text-center"><a href='profile.php?showorder' class="text-dark">Show Order</a></P>
+         <P class="m-4 fs-4 text-center"><a href='profile.php?edit' class="text-dark">Edit Profile </a></P>
+         <P class="m-4 fs-4 text-center"><a href='profile.php?Delete' class="text-danger">Delete Acount </a></P>
+         <P class="m-4 fs-4 text-center"><a href="../logout.php"><button class=" btn-warning btn" type="submit">Logout</button></a></p>
         </div>
 
 
+        <?php
 
-
+delete_user();
+?>
 
         <div class="profile-show">  
+        
 
-            <div class="profile-select">
-                <button type="button" class=" btn btn-outline-dark mt-3 m-3 " style="--bs-btn-padding-y: .40rem; --bs-btn-padding-x: 5rem; --bs-btn-font-size: 1rem;">
-                    All Order</button>
-                <button type="button" class=" btn btn-outline-dark mt-3 m-3  " style="--bs-btn-padding-y: .40rem; --bs-btn-padding-x: 5rem; --bs-btn-font-size: 1rem;">
-                    Pinding Order</button>
-                <button type="button" class= "btn btn-outline-dark mt-3 m-3 "style="--bs-btn-padding-y: .40rem; --bs-btn-padding-x: 5rem; --bs-btn-font-size: 1rem;">
-                    Done Order</button>
-            </div>
-            <div class="show-all">
-                <h3 class="text-center mt-3 mb-5 fw-bold">Show Order</h3>
-                
-                <div class="row m-3">
+         <?php
+         if(isset($_GET['edit'])){
+          include("edit.php");
+         }elseif(isset($_GET['Delete'])){
+          include("delete_user.php");
+         }elseif(isset($_GET['showorder'])){
+          
+          include("order_show.php");
 
-
-
-                    <div class="col-xxl-4">
-
-                        <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                          </div>
-  
-                    </div>
+         }
+         ?>
 
 
-                    <div class="col-xxl-4">
-
-
-                        <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                          </div>
-
-
-                    </div>
-                    <div class="col-xxl-4">
-
-                        <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                          </div>
-
-
-                    </div>
-                    <div class="col-xxl-4">
-
-                        <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                          </div>
-
-
-                    </div>
-                    
-                </div>
-
-       </div>
-
-
+    
     </div>
 
 
 
 
 <!--start footer-->
-<div class="container-faluid " >
-<div class=" w-100 "  style="background-color:black; height:60px;">
-  <p class="pt-3 text-center text-warning fs-5"><span>&copy;</span> 2023 All Rights Reserved By Suliman Bassam Alajarmeh 2023 </p>
-</div>
-</div>
+
 <!--end  footer-->  
 </body>
 

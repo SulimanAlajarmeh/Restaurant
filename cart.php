@@ -3,7 +3,7 @@
 include('Connect Database/connect.php');
 include('functions/function.php');
 session_start();
-echo$_SESSION['id'];
+
 
 ?>
 
@@ -21,6 +21,15 @@ echo$_SESSION['id'];
     <link rel="stylesheet" href="css/cart.css">
     <title>Document</title>
 </head>
+<style>
+  @media (max-width:768px) {
+    body{
+     min-height:703vh;
+        
+    }
+    
+}
+</style>
 <body>
     <!--start nav-->
 
@@ -59,7 +68,7 @@ echo$_SESSION['id'];
           echo'<script>window.open("UserArea/login.php","_SELF")</script>';
           }
         }else{
-          echo$_SESSION['id'];
+          
           add_cart();
           
         }
@@ -91,7 +100,7 @@ echo$_SESSION['id'];
 
             $food_name=$row_food['Food_name'];
             $food_price=$row_food['Food_price'];
-            $food_img=$row_food['Food_image2'];
+            $food_img=$row_food['Food_image1'];
             
 
          
@@ -114,7 +123,7 @@ echo$_SESSION['id'];
               
               <label for="quantity">Quantity:</label>
               <input type="number"  min="1"  name="quantity" style="width:150px;" >
-              <input style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .90rem; margin-bottom:5px;" class="  btn btn-dark text-white" type="submit" name="add" value="add">
+              <input style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .90rem; margin-bottom:5px;" class="  btn btn-dark text-white" type="submit" name="add" value="+">
     
               </p>
               
@@ -124,8 +133,14 @@ echo$_SESSION['id'];
         
         echo'<form>
         <a class="text-white" href="cart.php?remove='.$Cart_id.'"><input class=" w-100 mt-4  btn btn-danger text-white" type="button" name="remove" value="Remove Food" ></a>
-        </form>';
+        </form>
+   
+';
+
         ?>
+
+
+
             
             </div>
           </div>
@@ -169,7 +184,14 @@ echo$_SESSION['id'];
         <div class=" container mt-1 d-flex justify-content-center m-2">
         <a class="w-50 btn " href="cart.php?empty_cart"><button type="button" class= "w-100 btn btn-danger">Empty Cart</button></a>
         </div>
-        
+        <?php
+
+echo'     <div class="container-faluid " >
+<div class=" w-100 "  style="background-color:black; height:60px;">
+  <p class="pt-3 text-center text-warning fs-3">Suliman Alajarmeh <span>&copy;</span> 2023 </p>
+</div>
+</div>';
+        ?>
         <?php
       }else{
         echo'<h2 class="mt-5 text-center text-danger"> No Food Added To Cart</h2>';
@@ -193,11 +215,6 @@ update_cart();
     
 </div>
 
-<div class="container-faluid " >
-<div class=" w-100 "  style="background-color:black; height:60px;">
-  <p class="pt-3 text-center text-warning fs-3">Suliman Alajarmeh <span>&copy;</span> 2023 </p>
-</div>
-</div>
 
 
 </body>

@@ -6,7 +6,7 @@ if(!isset($_SESSION['id'])){
 
 }else{
     include("payment.php");
-    echo $_SESSION['username'];
+    
 }
 
 ?>

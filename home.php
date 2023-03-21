@@ -21,6 +21,14 @@ echo$_SESSION['id'];
     <link rel="stylesheet" href="css/home.css">
     <title>Document</title>
 </head>
+<style>
+  @media (max-width:768px) {
+    .test-card{
+      min-height:550px;
+    }
+    
+  }
+</style>
 <body>
     <!--start nav-->
     <nav class="nw navbar navbar-expand-lg ">
@@ -107,7 +115,7 @@ echo$_SESSION['id'];
               </li>
               
             </ul>
-            <a href="cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup class=" m-1  text-black fs-6"><?php if(isset($_SESSION['id'])){echo number_cart_food();}   ?></sup></i></a>
+            <a href="check_cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup class=" m-1  text-black fs-6"><?php if(isset($_SESSION['id'])){echo number_cart_food();}   ?></sup></i></a>
             <?php
             if(!isset($_SESSION['id'])){
             echo'<a href="UserArea/login.php"><button class="login-button btn" type="submit">Login</button></a>';

@@ -105,9 +105,14 @@ session_start();
               </li>
               
             </ul>
-            <a href="cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup  class="  m-1  text-black fs-6"><?php  echo number_cart_food(); ?></sup></i></a>
-       
-            <a href="UserArea/login.php"><button class="login-button btn" type="submit">Logout</button></a>
+            <a href="cart.php"><i class="cart fa-solid fa-cart-arrow-down"><sup class=" m-1  text-black fs-6"><?php if(isset($_SESSION['id'])){echo number_cart_food();}   ?></sup></i></a>
+            <?php
+            if(!isset($_SESSION['id'])){
+            echo'<a href="UserArea/login.php"><button class="login-button btn" type="submit">Login</button></a>';
+            }else{
+              echo'<a href="logout.php"><button class="login-button btn" type="submit">Logout</button></a>';
+            }
+            ?>
           </div>
         </div>
       </nav>
