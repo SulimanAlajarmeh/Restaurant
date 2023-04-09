@@ -44,7 +44,7 @@ if(isset($_POST['submit_country'])){
 
 <div class="input-group w-90 mb-3 ">
 
-    <input class="form-control bg-warning text-light " type="submit"  name="submit_country" value="Submit">
+    <input class="form-control bg-warning  " type="submit"  name="submit_country" value="Submit">
    
 </div>
 

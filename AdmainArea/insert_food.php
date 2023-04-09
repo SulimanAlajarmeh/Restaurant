@@ -39,6 +39,13 @@
 
             $result=mysqli_query($con,$insert);
             if($result){
+                $insert_food_order="INSERT INTO food_order (Food_name,Food_description,Food_keywords,country_name,type_name,Food_price,Food_image1,Food_image2,date)
+
+                VALUES ('$food_name','$food_description','$food_keywords','$food_country','$type_food','$price','$food_img1','$food_img2',Now())";
+
+                $result_food_order=mysqli_query($con,$insert_food_order);
+                if($result_food_order){
+
                 echo'<script>alert("Insert Food Successfully :) ")</script>';
                 echo "<script>window.open('admain.php?insert_food','_self')</script>";
             }else{
@@ -47,7 +54,7 @@
         }
       }
     
-
+    }
 
 
 ?>
