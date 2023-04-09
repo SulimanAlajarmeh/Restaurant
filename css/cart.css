@@ -1,0 +1,84 @@
+*{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+body{
+     font-family: Didot;
+     
+     
+     
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+/*start ladding*/
+.nw{
+    width:100%;
+    background-color: #eeeeee5c;
+}
+#logo{
+    margin-right: 5px;
+   font-family:Lucida Handwriting; 
+   font-size: 18px;
+   color:rgba(255, 195, 14, 0.856);
+}
+.img{
+    width:80px;
+    height: 80px;
+
+}
+
+#item{
+   margin-left: 50px;
+}
+.items{
+    margin-right: 18px;
+    font-size: 20px;
+}
+
+.search{
+    width: 300px;
+    border-radius: 20px;
+}
+
+.items > a{
+    font-weight: bold;
+}
+.items > a:hover{
+    color:rgba(255, 195, 14, 0.856);
+}
+.menu:hover{
+    background-color: rgba(255, 195, 14, 0.856);
+    
+    
+}
+
+.cart{
+    
+    margin-top: 10px;
+    font-size: 21px;
+   
+    
+   color:rgba(255, 195, 14, 0.856);
+}
+
+.login-button{
+    border:solid 2px rgba(255, 195, 14, 0.856);
+}
+.login-button:hover{
+    background-color: rgba(255, 195, 14, 0.856);
+}
+
+@media (max-width:768px) {
+    body{
+     min-height:703vh;
+        
+    }
+    
+}
